@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Toast Test</title>
+		<script src="toastwork.js"></script>
+		<link href="toastwork.css" rel="stylesheet"></link>
+	</head>
+	<body>
+		<div class="entryComponent">
+			<div>Text to Toast</div>
+			<input id="textbox" type="text" value="toast goes here">
+		</div>
+		<div class="entryComponent">
+			<div>Duration of Toast (seconds)</div>
+			<input id="numberbox" type="number" class="numField" value="5">
+		</div>
+		<div class="entryComponent">
+			<div>Type of Toast</div>
+			<input id="rSuccess" type="radio" name="type" value="success" checked>Success<br>
+			<input id="rError" type="radio" name="type" value="error">Error<br>
+			<input id="rWarning" type="radio" name="type" value="warning">Warning<br>
+			<input id="rInfo" type="radio" name="type" value="info">Info
+		</div>
+		<div class="entryComponent">
+			<input type="button" value="Show Toast" onclick="showToast();">
+		</div>
+		<div class="entryComponent">
+			<input type="button" value="Clear Toasts" onclick="clearToasts();">
+		</div>
+	</body>
+</html>

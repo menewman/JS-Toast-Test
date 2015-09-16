@@ -1,0 +1,58 @@
+.toaster {
+	position: fixed;
+	font-family: arial, sans-serif;
+	bottom: 150px;
+	right: 150px;
+}
+
+.toast {
+	padding: 10px;
+	width: 200px;
+	border-radius: 4px;
+	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.4);
+	z-index: 5;
+	opacity: 0;
+	overflow: : hidden;
+	text-overflow: ellipsis;
+	margin-top: 5px;
+	margin-bottom: 5px;
+
+	transition-property: opacity;
+	transition-duration: 0.75s;
+}
+
+.toast.visible {
+	opacity: 0.75;
+	cursor: pointer;
+
+	transition-property: opacity;
+	transition-duration: 0.75s;
+}
+
+.toast.visible:hover {
+	opacity: 1.0;
+}
+
+.toast.success {
+	background-color: green;
+	color: white;
+}
+
+.toast.error {
+	background-color: red;
+	color: white;
+}
+
+.toast.warning {
+	background-color: yellow;
+	color: black;
+}
+
+.toast.info {
+	background-color: blue;
+	color: white;
+}
+
+.entryComponent {
+	padding: 5px;
+}
