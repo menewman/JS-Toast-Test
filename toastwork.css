@@ -1,8 +1,26 @@
 .toaster {
 	position: fixed;
 	font-family: arial, sans-serif;
-	bottom: 150px;
-	right: 150px;
+}
+
+.toaster.bottomRight {
+	bottom: 50px;
+	right: 50px;
+}
+
+.toaster.bottomLeft {
+	bottom: 50px;
+	left: 50px;
+}
+
+.toaster.topRight {
+	top: 50px;
+	right: 50px;
+}
+
+.toaster.topLeft {
+	top: 50px;
+	left: 50px;
 }
 
 .toast {

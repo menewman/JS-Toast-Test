@@ -1,9 +1,6 @@
 showToast = function()
 {
-	if (!toasterExists())
-	{
-		createToasterIfNoToaster();
-	}
+	setUpContainer();
 
 	var newToast = populateEmptyToast();
 	appendEmptyToast();
@@ -11,6 +8,22 @@ showToast = function()
 	setTimeout(function() {
 		hideToast(newToast);
 	}, getToastDuration());
+}
+
+setUpContainer = function()
+{
+	if (!toasterExists())
+	{
+		createToasterIfNoToaster();
+	}
+
+	var toaster = getToaster();
+	_dom.removeClass(toaster, "bottomLeft");
+	_dom.removeClass(toaster, "bottomRight");
+	_dom.removeClass(toaster, "topLeft");
+	_dom.removeClass(toaster, "topRight");
+
+	_dom.applyClass(toaster, getToastLocation());
 }
 
 populateEmptyToast = function()
@@ -62,6 +75,19 @@ getToastType = function()
 	else if (warning.checked) return warning.value;
 	else if (info.checked) return info.value;
 	else return success.value;
+}
+
+getToastLocation = function()
+{
+	var bottomLeft = document.getElementById('rBottomLeft');
+	var bottomRight = document.getElementById('rBottomRight');
+	var topLeft = document.getElementById('rTopLeft');
+	var topRight = document.getElementById('rTopRight');
+
+	if (topLeft.checked) return topLeft.value;
+	else if (topRight.checked) return topRight.value;
+	else if (bottomLeft.checked) return bottomLeft.value;
+	else return bottomRight.value;
 }
 
 getToasts = function()
