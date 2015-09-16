@@ -5,19 +5,27 @@ showToast = function()
 		createToasterIfNoToaster();
 	}
 
-	var toasts = getToasts();
-	var lastToast = toasts[toasts.length - 1];
-	lastToast.innerText = getText();
-	lastToast.className = "toast visible " + getToastType();
-	lastToast.onclick = function() {
-		hideToast(lastToast);
-	};
-
+	var newToast = populateEmptyToast();
 	appendEmptyToast();
 
 	setTimeout(function() {
-		hideToast(lastToast);
+		hideToast(newToast);
 	}, getToastDuration());
+}
+
+populateEmptyToast = function()
+{
+	var toasts = getToasts();
+	var newToast = toasts[toasts.length - 1];
+
+	newToast.innerText = getText();
+	_dom.applyClass(newToast, "visible");
+	_dom.applyClass(newToast, getToastType());
+	newToast.onclick = function() {
+		hideToast(newToast);
+	};
+
+	return newToast;
 }
 
 createToasterIfNoToaster = function()
@@ -68,12 +76,7 @@ hideToast = function(toastToHide)
 		return;
 	}
 
-	var classNames = toastToHide.className.split(" ");
-	while (classNames.indexOf("visible") > -1)
-	{
-		classNames.splice(classNames.indexOf("visible"), 1);
-	}
-	toastToHide.className = classNames.join(" ");
+	_dom.removeClass(toastToHide, "visible");
 
 	setTimeout(destroyEmptyToasts, 750);
 }
@@ -91,7 +94,7 @@ destroyEmptyToasts = function()
 
 removeToastifInvisible = function(toaster, toast)
 {
-	if (toast.className.split(" ").indexOf("visible") === -1)
+	if (!_dom.hasClass(toast, "visible"))
 	{
 		toaster.removeChild(toast);
 	}
