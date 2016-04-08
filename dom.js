@@ -1,6 +1,6 @@
-_dom = {
-	applyClass: function(element, classToAdd) {
-		if (this.classNameOrElementDoesNotExist(classToAdd, element))
+_dom = (function(){
+	function applyClass(element, classToAdd) {
+		if (!classToAdd || !element)
 		{
 			return;
 		}
@@ -11,10 +11,10 @@ _dom = {
 			classes.push(classToAdd);
 		}
 		element.className = classes.join(" ");
-	},
+	}
 
-	removeClass: function(element, classToRemove) {
-		if (this.classNameOrElementDoesNotExist(classToRemove, element))
+	function removeClass(element, classToRemove) {
+		if (!classToRemove || !element)
 		{
 			return;
 		}
@@ -25,14 +25,16 @@ _dom = {
 			classes.splice(classes.indexOf(classToRemove), 1)
 		}
 		element.className = classes.join(" ");
-	},
+	}
 
-	hasClass: function(element, classToCheck)
+	function hasClass(element, classToCheck)
 	{
 		return element.className.split(" ").indexOf(classToCheck) > -1;
-	},
-
-	classNameOrElementDoesNotExist: function(className, element) {
-		return !className || !element;
 	}
-}
+
+	return {
+		applyClass: applyClass,
+		removeClass: removeClass,
+		hasClass: hasClass
+	};
+})();
