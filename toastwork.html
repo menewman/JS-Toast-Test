@@ -2,8 +2,6 @@
 <html>
 	<head>
 		<title>Toast Test</title>
-		<script src="toastwork.js"></script>
-		<script src="dom.js"></script>
 		<link href="toastwork.css" rel="stylesheet"></link>
 	</head>
 	<body>
@@ -34,10 +32,12 @@
 			Top Right
 		</div>
 		<div class="entryComponent">
-			<input type="button" value="Show Toast" onclick="_toast.showToast();">
+			<input type="button" value="Show Toast" onclick="VanillaToast.showToast();">
 		</div>
 		<div class="entryComponent">
-			<input type="button" value="Clear Toasts" onclick="_toast.clearToasts();">
+			<input type="button" value="Clear Toasts" onclick="VanillaToast.clearToasts();">
 		</div>
+		<script src="dom.js"></script>
+		<script src="toastwork.js"></script>
 	</body>
 </html>

@@ -1,74 +1,63 @@
-_toast = {
-	showToast : function()
+VanillaToast = (function() {
+
+	var toaster;
+	(function createToaster()
 	{
-		this.setUpContainer();
+		toaster = document.createElement("div");
+		toaster.className = "toaster";
+		toaster.appendChild(createEmptyToast());
+		document.body.appendChild(toaster);
+	})();
 
-		var newToast = this.populateEmptyToast();
-		this.appendEmptyToast();
+	function showToast()
+	{
+		setUpContainer();
+		
+		var newToast = populateEmptyToast();
+		appendEmptyToast();
 
-		var that = this;
 		setTimeout(function() {
-			that.hideToast(newToast);
-		}, this.getToastDuration());
-	},
+			hideToast(newToast);
+		}, getToastDuration());
+	}
 
-	setUpContainer : function()
+	function setUpContainer()
 	{
-		if (!this.toasterExists())
-		{
-			this.createToasterIfNoToaster();
-		}
-
-		var toaster = this.getToaster();
 		_dom.removeClass(toaster, "bottomLeft");
 		_dom.removeClass(toaster, "bottomRight");
 		_dom.removeClass(toaster, "topLeft");
 		_dom.removeClass(toaster, "topRight");
 
-		_dom.applyClass(toaster, this.getToastLocation());
-	},
+		_dom.applyClass(toaster, getToastLocation());
+	}
 
-	populateEmptyToast : function()
+	function populateEmptyToast()
 	{
-		var toasts = this.getToasts();
+		var toasts = getToasts();
 		var newToast = toasts[toasts.length - 1];
 
-		newToast.innerText = this.getText();
+		newToast.innerText = getText();
 		_dom.applyClass(newToast, "visible");
-		_dom.applyClass(newToast, this.getToastType());
+		_dom.applyClass(newToast, getToastType());
 
-		var that = this;
 		newToast.onclick = function() {
-			that.hideToast(newToast);
+			hideToast(newToast);
 		};
 
 		return newToast;
-	},
+	}
 
-	createToasterIfNoToaster : function()
-	{
-		var toaster = document.createElement("div");
-		toaster.className = "toaster";
-		toaster.appendChild(this.createEmptyToast());
-		document.body.appendChild(toaster);
-	},
-
-	toasterExists : function()
-	{
-		return typeof this.getToaster() !== "undefined";
-	},
-
-	getText : function()
+	function getText()
 	{
 		return document.getElementById("textbox").value;
-	},
+	}
 
-	getToastDuration : function()
+	function getToastDuration()
 	{
 		return (document.getElementById("numberbox").value || 2) * 1000;
-	},
+	}
 
-	getToastType : function()
+	function getToastType()
 	{
 		var success = document.getElementById('rSuccess');
 		var error = document.getElementById('rError');
@@ -79,9 +68,9 @@ _toast = {
 		else if (warning.checked) return warning.value;
 		else if (info.checked) return info.value;
 		else return success.value;
-	},
+	}
 
-	getToastLocation : function()
+	function getToastLocation()
 	{
 		var bottomLeft = document.getElementById('rBottomLeft');
 		var bottomRight = document.getElementById('rBottomRight');
@@ -92,14 +81,14 @@ _toast = {
 		else if (topRight.checked) return topRight.value;
 		else if (bottomLeft.checked) return bottomLeft.value;
 		else return bottomRight.value;
-	},
+	}
 
-	getToasts : function()
+	function getToasts()
 	{
-		return document.getElementsByClassName("toast");
-	},
+		return toaster.getElementsByClassName("toast");
+	}
 
-	hideToast : function(toastToHide)
+	function hideToast(toastToHide)
 	{
 		if (!toastToHide)
 		{
@@ -108,63 +97,54 @@ _toast = {
 
 		_dom.removeClass(toastToHide, "visible");
 
-		var that = this;
 		setTimeout(function() {
-			that.destroyEmptyToasts();
+			destroyEmptyToasts();
 		}, 750);
-	},
+	}
 
-	destroyEmptyToasts : function()
+	function destroyEmptyToasts()
 	{
-		var toaster = this.getToaster();
-		var toasts = this.getToasts();
+		var toasts = getToasts();
 
 		for (var i = toasts.length - 2; i >= 0; i--)
 		{
-			this.removeToastifInvisible(toaster, toasts[i]);
+			removeToastifInvisible(toaster, toasts[i]);
 		}
-	},
+	}
 
-	removeToastifInvisible : function(toaster, toast)
+	function removeToastifInvisible(toaster, toast)
 	{
 		if (!_dom.hasClass(toast, "visible"))
 		{
 			toaster.removeChild(toast);
 		}
-	},
+	}
 
-	getToaster : function()
-	{
-		return document.getElementsByClassName("toaster")[0];
-	},
-
-	createEmptyToast : function()
+	function createEmptyToast()
 	{
 		var toast = document.createElement("div");
 		toast.className = "toast";
 		return toast;
-	},
+	}
 
-	appendEmptyToast : function()
+	function appendEmptyToast()
 	{
-		document.getElementsByClassName("toaster")[0].appendChild(this.createEmptyToast());
-	},
+		document.getElementsByClassName("toaster")[0].appendChild(createEmptyToast());
+	}
 
-	clearToasts : function()
+	function clearToasts()
 	{
-		if (!this.toasterExists())
-		{
-			return;
-		}
-
-		var toaster = this.getToaster();
-		var toasts = this.getToasts();
+		var toasts = getToasts();
 
 		for (var i = toasts.length - 1; i >= 0; i--)
 		{
 			toaster.removeChild(toasts[i]);
 		}
-
-		this.appendEmptyToast();
+		appendEmptyToast();
 	}
-}
+
+	return {
+		showToast: showToast,
+		clearToasts: clearToasts
+	}
+})();
